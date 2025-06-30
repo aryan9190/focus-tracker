@@ -1,36 +1,39 @@
-document.querySelectorAll('.faq-toggle').forEach(button => {
+// Toggle FAQ answers on click
+document.querySelectorAll('.faq-toggle').forEach((button) => {
   button.addEventListener('click', () => {
-    const content = button.nextElementSibling;
-    content.classList.toggle('hidden');
+    const answer = button.nextElementSibling;
+    answer.classList.toggle('hidden');
   });
 });
 
+// Start countdown timer when user clicks start
 function startTimer() {
-  const minutesInput = document.getElementById("custom-minutes");
-  const countdownDisplay = document.getElementById("countdown");
-  let minutes = parseInt(minutesInput.value);
+  const input = document.getElementById("custom-minutes");
+  const display = document.getElementById("countdown");
+  let minutes = parseInt(input.value);
 
   if (isNaN(minutes) || minutes <= 0) {
     alert("Please enter a valid number of minutes.");
     return;
   }
 
-  let seconds = minutes * 60;
-  updateCountdown();
+  let totalSeconds = minutes * 60;
+  updateDisplay();
 
   const interval = setInterval(() => {
-    seconds--;
-    updateCountdown();
+    totalSeconds--;
+    updateDisplay();
 
-    if (seconds <= 0) {
+    if (totalSeconds <= 0) {
       clearInterval(interval);
-      countdownDisplay.textContent = "Session Complete!";
+      display.textContent = "Session Complete!";
     }
   }, 1000);
 
-  function updateCountdown() {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    countdownDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  // Update the countdown UI
+  function updateDisplay() {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   }
 }
